@@ -64,7 +64,12 @@ public:
 
 	bool Connect(const char* pIP, int iPort, int iTimeOut, int iBuffSize = MIN_BUFFER_SIZE, int iFlag = SF_16BIT_WIN);
 	bool Listen(int iPort, int iNum = 8, int iBuffSize = MIN_BUFFER_SIZE, int iFlag = SF_16BIT_WIN);
-	SendResult Send(const HSock& rSock, void* pData, int iSize);
 	void Disconnect(const HSock& rSock);
+	SendResult Send(const HSock& rSock, void* pData, int iSize);
+	bool Recv(Handle hSocket, char* pBuff, int BuffSize, int& ByteRecv);
+	bool Ping(const char* pIP, std::function<void(bool, int)> fCallback);
 	
+private:
+	bool CreateSock(unsigned int& hScok, const char* pIP, int iPort, int iBuffSize, int iFlag, int ForceUDP);
+	void ReleaseSock(unsigned int hSock);
 };
